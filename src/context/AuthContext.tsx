@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import { loginApi } from "../api/auth";
 import type { AuthState, LoginCredentials, User } from "../types";
 
