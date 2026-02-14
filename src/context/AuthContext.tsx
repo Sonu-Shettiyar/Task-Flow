@@ -1,21 +1,24 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, {  useState, useCallback } from "react";
+import axios from "axios";
+
 import { loginApi } from "../api/auth";
-import type { AuthState, LoginCredentials, User } from "../types";
-
-interface AuthContextType extends AuthState {
-  login: (credentials: LoginCredentials) => Promise<void>;
-  logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import type { LoginCredentials, User } from "../types";
+import { AuthContext } from "../hooks/useAuth";
 
 const AUTH_STORAGE_KEY = "task_app_auth";
+
+interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>(() => {
     const stored = sessionStorage.getItem(AUTH_STORAGE_KEY);
     if (stored) {
-      const user: User = JSON.parse(stored);
+      const user = JSON.parse(stored);
       return { user, isAuthenticated: true, isLoading: false, error: null };
     }
     return { user: null, isAuthenticated: false, isLoading: false, error: null };
@@ -29,18 +32,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setState({ user, isAuthenticated: true, isLoading: false, error: null });
     } catch (err: unknown) {
       let message = "Login failed";
-
-      if (
-        typeof err === "object" &&
-        err !== null &&
-        "response" in err
-      ) {
-        const e = err as {
-          response?: { data?: { message?: string } };
-        };
-        message = e.response?.data?.message ?? message;
+      if (axios.isAxiosError(err)) {
+        message = err.response?.data?.message || "Login failed";
       }
-
       setState((s) => ({ ...s, isLoading: false, error: message }));
     }
   }, []);
@@ -55,10 +49,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-  return ctx;
 }

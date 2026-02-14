@@ -1,19 +1,12 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
-import { useAuth } from "./AuthContext";
+import * as api from "../api/task";
+import React, { useState, useCallback } from "react";
 
-import * as api from "../api/task.ts";
+import { useAuth } from "../hooks/useAuth";
 import type { Task, TaskState } from "../types";
+import { TaskContext } from "../hooks/useTasks";
 
-interface TaskContextType extends TaskState {
-  loadTasks: () => Promise<void>;
-  addTask: (task: Partial<Task>) => Promise<void>;
-  editTask: (id: string, task: Partial<Task>) => Promise<void>;
-  removeTask: (id: string) => Promise<void>;
-}
 
-const TaskContext = createContext<TaskContextType | undefined>(undefined);
-
-export function TaskProvider({ children }: { children: React.ReactNode }) {
+export  function TaskProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const [state, setState] = useState<TaskState>({ tasks: [], isLoading: false, error: null });
 
@@ -64,10 +57,4 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
       {children}
     </TaskContext.Provider>
   );
-}
-
-export function useTasks() {
-  const ctx = useContext(TaskContext);
-  if (!ctx) throw new Error("useTasks must be used within TaskProvider");
-  return ctx;
 }

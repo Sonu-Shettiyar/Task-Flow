@@ -1,13 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-
-type Theme = "light" | "dark";
-
-interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+import React, {  useState, useEffect, useCallback } from "react";
+import { ThemeContext, type Theme } from "../hooks/useTheme";
 
 const THEME_KEY = "task_app_theme";
 
@@ -34,10 +26,4 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       {children}
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme() {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used within ThemeProvider");
-  return ctx;
 }
