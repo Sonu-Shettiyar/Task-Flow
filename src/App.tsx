@@ -8,9 +8,10 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import { AuthProvider } from "./context/AuthContext";
 import { TaskProvider } from "./context/TaskContext";
-import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 import { setupMockApi } from "./mocks/interceptors";
+import { useTheme } from "./hooks/useTheme";
 
 setupMockApi();
 

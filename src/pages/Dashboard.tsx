@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useTasks } from "../context/TaskContext";
 import { Button, Input, Select, Spin, Typography } from "antd";
 import { PlusOutlined, SearchOutlined, SortAscendingOutlined } from "@ant-design/icons";
 
@@ -10,6 +9,7 @@ import ErrorView from "../components/ErrorView";
 import EmptyState from "../components/EmptyState";
 
 import type { Task, TaskStatus } from "../types";
+import { useTasks } from "../hooks/useTasks";
 
 const { Text } = Typography;
 

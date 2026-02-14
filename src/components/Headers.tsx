@@ -1,7 +1,7 @@
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
 import { Button, Space } from "antd";
 import { LogoutOutlined, CheckSquareOutlined, SunOutlined, MoonOutlined } from "@ant-design/icons";
+import { useTheme } from "../hooks/useTheme";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Header() {
   const { user, logout } = useAuth();

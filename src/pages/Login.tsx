@@ -3,8 +3,8 @@ import { Navigate } from "react-router-dom";
 import { Card, Input, Button, Typography, Alert } from "antd";
 import { CheckSquareOutlined, SunOutlined, MoonOutlined } from "@ant-design/icons";
 
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../hooks/useAuth";
+import { useTheme } from "../hooks/useTheme";
 
 const { Title, Paragraph, Text } = Typography;
 
