@@ -27,8 +27,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const user = await loginApi(credentials);
       sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
       setState({ user, isAuthenticated: true, isLoading: false, error: null });
-    } catch (err: any) {
-      const message = err.response?.data?.message || "Login failed";
+    } catch (err: unknown) {
+      let message = "Login failed";
+
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "response" in err
+      ) {
+        const e = err as {
+          response?: { data?: { message?: string } };
+        };
+        message = e.response?.data?.message ?? message;
+      }
+
       setState((s) => ({ ...s, isLoading: false, error: message }));
     }
   }, []);
