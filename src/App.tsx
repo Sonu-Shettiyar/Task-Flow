@@ -10,6 +10,10 @@ import { AuthProvider } from "./context/AuthContext";
 import { TaskProvider } from "./context/TaskContext";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
 
+import { setupMockApi } from "./mocks/interceptors";
+
+setupMockApi();
+
 function AntConfigWrapper({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme();
   return (
