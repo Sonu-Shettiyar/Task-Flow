@@ -1,4 +1,14 @@
- 
+export type TaskStatus = "todo" | "in-progress" | "done";
+
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: TaskStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface User {
   username: string;
   token: string;
@@ -15,4 +25,9 @@ export interface AuthState {
   isLoading: boolean;
   error: string | null;
 }
- 
+
+export interface TaskState {
+  tasks: Task[];
+  isLoading: boolean;
+  error: string | null;
+}
