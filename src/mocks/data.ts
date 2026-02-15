@@ -1,7 +1,6 @@
 import type { Task } from "../types";
 
 const TASKS_KEY = "mock_tasks";
-const AUTH_KEY = "mock_auth";
 
 const DEFAULT_TASKS: Task[] = [
   {
@@ -51,17 +50,6 @@ export function saveTasks(tasks: Task[]): void {
   localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
 }
 
-export function getAuth(): string | null {
-  return sessionStorage.getItem(AUTH_KEY);
-}
-
-export function setAuth(token: string): void {
-  sessionStorage.setItem(AUTH_KEY, token);
-}
-
-export function clearAuth(): void {
-  sessionStorage.removeItem(AUTH_KEY);
-}
 
 export const VALID_USER = { username: "test", password: "test123" };
 export const FAKE_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MDg1OTIwMDB9.mock_signature";
