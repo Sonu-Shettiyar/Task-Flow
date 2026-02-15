@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ProtectedRoute from "../../src/components/ProtectedRoute";
 import { AuthContext } from "../../src/hooks/useAuth";
-import type { ReactNode } from "react";
 
 function renderWithAuth(isAuthenticated: boolean) {
   const authValue = {

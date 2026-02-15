@@ -8,18 +8,17 @@ A modern task management application built with React, TypeScript, and Ant Desig
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | React 18 + Vite |
-| Language | TypeScript |
-| UI Library | Ant Design 6 |
-| Styling | Tailwind CSS |
-| State | Context API |
-| HTTP | Axios |
-| Forms | Formik + Yup |
-| Testing | Jest + React Testing Library |
-| Mocking | Axios interceptors |
-
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Framework  | React 18 + Vite              |
+| Language   | TypeScript                   |
+| UI Library | Ant Design 6                 |
+| Styling    | Tailwind CSS                 |
+| State      | Context API                  |
+| HTTP       | Axios                        |
+| Forms      | Formik + Yup                 |
+| Testing    | Jest + React Testing Library |
+| Mocking    | Axios interceptors           |
 
 ## How Mocking Works
 
@@ -42,7 +41,7 @@ The app uses **Axios interceptors** to simulate a REST API entirely in the brows
 
 ```bash
 npm install
-npm run dev        
+npm run dev
 ```
 
 **Default credentials:** `test` / `test123`
@@ -53,7 +52,9 @@ npm run dev
 
 ```bash
 npm run test              # Run all tests once
-npm run test:coverage   # Run with coverage report
+npm run test:coverage     # Run with coverage report
+npm run type-check        # Run type check
+npm run lint              # Run lint check
 ```
 
 Tests are co-located with source files using `*.test.ts(x)` naming. The project targets **100% unit test coverage** with zero lint errors.
