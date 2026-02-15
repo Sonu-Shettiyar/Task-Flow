@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# TaskFlow – Task Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern task management application built with React, TypeScript, and Ant Design.
 
-Currently, two official plugins are available:
+**Preview**: [Open App](https://task-flow-sonushettiyar.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer      | Technology                   |
+| ---------- | ---------------------------- |
+| Framework  | React 18 + Vite              |
+| Language   | TypeScript                   |
+| UI Library | Ant Design 6                 |
+| Styling    | Tailwind CSS                 |
+| State      | Context API                  |
+| HTTP       | Axios                        |
+| Forms      | Formik + Yup                 |
+| Testing    | Jest + React Testing Library |
+| Mocking    | Axios interceptors           |
 
-## Expanding the ESLint configuration
+## How Mocking Works
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The app uses **Axios interceptors** to simulate a REST API entirely in the browser — no backend server required.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. `setupMockApi()` in `src/mocks/interceptors.ts` registers request/response interceptors on Axios.
+2. Outgoing requests to `/api/*` are intercepted before reaching the network.
+3. The interceptor matches the URL and method, then returns a mock response using data stored in `localStorage`.
+4. Supported endpoints:
+   - `POST /api/login` — authenticate with `test` / `test123`
+   - `GET /api/tasks` — list all tasks (requires `Authorization` header)
+   - `POST /api/tasks` — create a task
+   - `PUT /api/tasks/:id` — update a task
+   - `DELETE /api/tasks/:id` — delete a task
+5. Mock data persists across page reloads via `localStorage`.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running the App
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Default credentials:** `test` / `test123`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Running Tests
+
+```bash
+npm run test              # Run all tests once
+npm run test:coverage     # Run with coverage report
+npm run type-check        # Run type check
+npm run lint              # Run lint check
 ```
+
+Tests are co-located with source files using `*.test.ts(x)` naming. The project targets **100% unit test coverage** with zero lint errors.
+
+---
+
+## Features
+
+- **Authentication** — login/logout with session persistence
+- **Task CRUD** — create, edit, delete tasks with Formik + Yup validation
+- **Search & Filter** — filter tasks by status, search by title/description
+- **Sort** — sort by date or title
+- **Dark Mode** — toggle available on all routes, persisted to localStorage
+- **Empty & Error States** — dedicated components for empty lists and API errors
+- **Responsive** — mobile-first layout using Tailwind CSS + Ant Design grid
